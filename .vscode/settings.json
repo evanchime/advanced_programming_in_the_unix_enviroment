@@ -1,5 +1,8 @@
 {
     "files.associations": {
-        "limits.h": "c"
+        "limits.h": "c",
+        "cmath": "cpp",
+        "limits": "cpp",
+        "algorithm": "cpp"
     }
 }
