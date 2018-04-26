@@ -21,13 +21,15 @@ int main(void) {
     off_t m; 
     char recvline[2];
 
-    if ((fd = open("./exercise3.6.h", O_RDWR | O_APPEND)) < 0) 
+    if ((fd = open("./exercise3.6.h", O_RDWR | O_APPEND)) < 0)// open the test file 
         err_sys("open error"); 
 
+    //populate the opened file
     if (write(fd, buf1, BUFSIZE) != BUFSIZE) 
         err_sys("buf1 write error"); 
     /* offset now = BUFSIZE */
 
+    //the portion that checks if we can read from anywhere in the file
     if((n = pread(fd,recvline,PROGRAMOFFSET,SEEK_SET)) == -1){//the lseek and read process. atomic 
         err_sys("pread error");
     }else if(n == 0){
@@ -37,6 +39,7 @@ int main(void) {
         printf("read is possible from anywhere\n");
     }
 
+    //the portion that checks if we can write from anywhere in the file
     if((n = pwrite(fd,buf2,BUFSIZE,SEEK_SET)) == -1){//the lseek and write process. atomic 
         err_sys("pwrite error");
     }
@@ -47,6 +50,7 @@ int main(void) {
     }else{
         printf("you can use lseek to replace existing data in the ﬁle\n offset is %ld bytes\n", m);
     }
+    
     exit(0);
 }
     
