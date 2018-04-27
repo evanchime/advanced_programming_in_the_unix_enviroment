@@ -30,7 +30,7 @@ int main(void) {
     /* offset now = BUFSIZE */
 
     //the portion that checks if we can read from anywhere in the file
-    if((n = pread(fd,recvline,PROGRAMOFFSET,SEEK_SET)) == -1){//the lseek and read process. atomic 
+    if((n = pread(fd,recvline,PROGRAMOFFSET,SEEK_SET)) == -1){//the lseek to the beginning of file and read process. atomic 
         err_sys("pread error");
     }else if(n == 0){
         printf("read is not possible from anywhere\n");
@@ -40,7 +40,7 @@ int main(void) {
     }
 
     //the portion that checks if we can write from anywhere in the file
-    if((n = pwrite(fd,buf2,BUFSIZE,SEEK_SET)) == -1){//the lseek and write process. atomic 
+    if((n = pwrite(fd,buf2,BUFSIZE,SEEK_SET)) == -1){//the lseek to the beginning of file and write process. atomic 
         err_sys("pwrite error");
     }
     if ((m = lseek(fd, 0, SEEK_END)) == -1) 
