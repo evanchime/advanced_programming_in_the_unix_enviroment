@@ -40,7 +40,7 @@ int main(void) {
     }
 
     //the portion that checks if we can write from anywhere in the file
-    if((n = pwrite(fd,buf2,BUFSIZE,SEEK_SET)) == -1){//the lseek to the beginning of file and write process. atomic 
+    if(pwrite(fd,buf2,BUFSIZE,SEEK_SET) == -1){//the lseek to the beginning of file and write process. atomic 
         err_sys("pwrite error");
     }
     if ((m = lseek(fd, 0, SEEK_END)) == -1) 
