@@ -1,3 +1,10 @@
+/*
+	* simple file walker to show the use of the directory routines.
+	* We’ll use these directory routines to write a program that traverses a file hierarchy.
+	* The goal is to produce a count of the various types of files shown in Figure4.4. 
+	* The program shown takes a single argument — the starting pathname—and recursively descends the hierarchy from that point.
+*/
+
 #include "apue.h"
 #include <dirent.h> 
 #include <limits.h> 
