@@ -1,4 +1,5 @@
 #include "apue.h" 
+#include "standardErrorRoutines.h"
 
 int 
 main(void) 
@@ -10,6 +11,6 @@ main(void)
 		err_sys("chmod error for foo"); // set absolute mode to "rw-r--r--"  
 	if (chmod("bar", S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH) < 0) 
 		err_sys("chmod error for bar"); */
-	if (chmod("foo", (statbuf.st_mode & ˜S_IRUSR)) < 0)                                                                                           err_sys("chmod error for foo"); 	
+	if (chmod("foo", (statbuf.st_mode & ~S_IRUSR)) < 0)                                                                                           err_sys("chmod error for foo"); 	
 	exit(0); 
 }
