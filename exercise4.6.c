@@ -1,3 +1,8 @@
+/*
+	*A program that uses my cp(1) like utility that copies a file containing holes, 
+	*without writing the bytes of 0 to the output
+*/
+
 #include "standardErrorRoutines.h"
 #include "mycp.h"
 
