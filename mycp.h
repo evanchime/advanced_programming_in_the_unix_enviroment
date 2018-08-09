@@ -16,14 +16,9 @@ int
 mycp(const char *fromPath, const char *toPath)  /* copy input path to output path */
 {
 	umask(0);
-	//struct stat statbuf;
-        //off_t fromPath_size; /* size in bytes, for copyFrom path */
+	
 	char c;
 	int n, fromPathFd, toPathFd;
-
-	/*if (stat("fromPath", &statbuf) < 0) 
-		err_sys("stat error for fromPath");*/
-	//fromPath_size = statbuf.st_size;
 	
 	if((fromPathFd = open(fromPath, O_RDONLY)) < 0)
 		err_sys("fromPath open error");
