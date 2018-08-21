@@ -10,7 +10,7 @@
 #include <fcntl.h>
 #include "standardErrorRoutines.h"
 
-#define RWXRWXRWX (S_IRWXU|S_IRWXG|S_IRWXO)
+#define RWRWRW (S_IRUSR | S_IWUSR | S_IRGRP | S_IWGRP | S_IROTH | S_IWOTH)
 
 int
 mycp(const char *fromPath, const char *toPath)  /* copy input path to output path */
@@ -23,7 +23,7 @@ mycp(const char *fromPath, const char *toPath)  /* copy input path to output pat
 	if((fromPathFd = open(fromPath, O_RDONLY)) < 0)
 		err_sys("fromPath open error");
  
-	if((toPathFd = open(toPath, O_RDWR | O_CREAT | O_TRUNC, RWXRWXRWX)) < 0)
+	if((toPathFd = open(toPath, O_RDWR | O_CREAT | O_TRUNC, RWRWRW)) < 0)
 		err_sys("toPath open error"); 
 
 	while ((n = read(fromPathFd, &c, 1)) > 0){
