@@ -102,15 +102,16 @@ dopath(Myfunc* func, const char *filename) {
                 *then process each filename in the directory.
         */
          if ((ret = func(filename, &statbuf, FTW_D)) != 0) 
-                return(ret); 
-         
+                return(ret);  	
+
          if (chdir(filename) < 0)  /* change directory to filename */ 
                 err_sys("chdir failed");
 
-	if ((dp = opendir(".")) == NULL) /* can’t read directory */     
-                return(func(filename, &statbuf, FTW_DNR));  
-                
-	while ((dirp = readdir(dp)) != NULL) {
+	 if ((dp = opendir(".")) == NULL) /* can’t read directory */     
+                return(func(filename, &statbuf, FTW_DNR)); 
+
+ 
+        while ((dirp = readdir(dp)) != NULL) {
                 if (strcmp(dirp->d_name, ".") == 0 || strcmp(dirp->d_name, "..") == 0)
                         continue; /* ignore dot and dot-dot */
                 if ((ret = dopath(func, dirp->d_name)) != 0) /* recursive */ 
