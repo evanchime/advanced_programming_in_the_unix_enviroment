@@ -1,4 +1,13 @@
 /*
+ 	* In Section 4.22, our version of ftw never changes its directory.
+	* Modify this routine so that each time it encounters a directory, 
+	* it uses the chdir function to change to that directory, 
+	* allowing it to use the ﬁlename and not the pathname for each call to lstat.
+	* When all the entries in a directory have been processed, execute chdir("..").
+	* Compare the time used by this version and the version in the text
+*/
+
+/*
 	* simple file walker to show the use of the directory routines.
 	* We’ll use these directory routines to write a program that traverses a file hierarchy.
 	* The goal is to produce a count of the various types of files shown in Figure4.4. 
