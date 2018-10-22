@@ -1,13 +1,17 @@
+/*
+ 	* BSD-based implementation of fmemopen for FreeBSD and Mac OS X 
+        * using funopen
+*/	
+
+#ifndef _MYFMEMOPEN_H 
+#define _MYFMEMOPEN_H
+
+#include "myfmemopen_io.h"
+
 FILE *fmemopen(void *restrict buf, size_t size, const char *restrict type){
 	FILE *fp = tmpfile(); // The stream
+	static struct cookie cookie;
 	    
-	// The cookie
-	static struct{
-		FILE *fp; // The stream
-		int malloc_flag; // Buffer allocated dynamically if 1, 0 otherwise
-		void *buf; // The buffer
-	}cookie;
-
 	// initialize cookie
 	cookie.fp = fp;
 	if(buf == NULL){	
@@ -20,7 +24,7 @@ FILE *fmemopen(void *restrict buf, size_t size, const char *restrict type){
 	if (strlen(buf) != size)
 		err_sys("error: buf length and argument size don't match");
 
-	buf[0] = '\0';
+	((char *)buf)[0] = '\0';
 	cookie.buf = buf;
 
 	fp->_p = fp->_bf._base; // Set current position in _bf._base buffer
@@ -58,3 +62,5 @@ FILE *fmemopen(void *restrict buf, size_t size, const char *restrict type){
 
 	return funopen(&cookie, myread_fn, mywrite_fn, myseek_fn, myclose_fn); 
 }
+
+#endif /* _MYFMEMOPEN_H*/

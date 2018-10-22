@@ -5,7 +5,6 @@
 */
 
 #include "standarderrorroutines.h"
-#include "myfmemopen_io.h"
 #include "myfmemopen.h"
 
 #define BSZ 48 
