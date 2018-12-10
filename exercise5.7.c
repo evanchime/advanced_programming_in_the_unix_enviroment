@@ -4,9 +4,8 @@
 	* Use this function to implement fmemopen for FreeBSD and Mac OS X
 */
 
+#include "apue_fmemopen.h"
 #include "standarderrorroutines.h"
-#include "myfmemopen.h"
-
 #define BSZ 48 
 
 int 
@@ -20,7 +19,7 @@ main()
 	buf[BSZ-1] = 'X'; 
 	if ((fp = fmemopen(buf, BSZ, "w+")) == NULL) 
 		err_sys("fmemopen failed"); 
-	printf("initial buffer contents: %s\n", buf); 
+	printf("initial buffer contents: %s\n", buf);
 	fprintf(fp, "hello, world"); 
 	printf("before flush: %s\n", buf); 
 	fflush(fp); 
