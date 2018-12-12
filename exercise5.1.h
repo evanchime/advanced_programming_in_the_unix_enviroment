@@ -1,19 +1,17 @@
-
-
-
+/* Implement setbuf using setvbuf.*/
 
 void
-setbuf(FILE *restrict fp,char *restrict buf){
-	size_t size = BUFSIZE;
+my_setbuf(FILE *restrict fp,char *restrict buf){
+	size_t size = BUFSIZ;
 	int mode = _IOFBF;
 	if(buf == NULL){
 		size = 0;
 		mode = _IONBF;
 	}else{ // set line buffering if the stream is associated with a terminal device, otherwise full buffering
 		struct stat sbuf;
-		if(fstat(fp, &sbuf) < 0)
+		if(fstat(fileno(fp), &sbuf) < 0)
 			err_ret("fstat error");
-		else if(S_ISBLK(buf.st_mode))
+		else if(S_ISBLK(sbuf.st_mode))
 			mode = _IOLBF;
 	}
 	setvbuf(fp, buf, mode, size);
