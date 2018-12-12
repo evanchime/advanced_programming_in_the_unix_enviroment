@@ -12,9 +12,9 @@ main(int argc, char *argv[])
 
 	char buf[BUFSIZ];
 
-	my_setbuf(fp, buf);
+	my_setbuf(stdout, buf);
 
-	printf("%d", fp->_bf._size);
+	printf("%d", stdout->_bf._size);
 	exit(0);
 }
 

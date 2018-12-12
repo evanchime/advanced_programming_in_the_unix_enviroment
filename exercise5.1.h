@@ -1,4 +1,7 @@
-/* Implement setbuf using setvbuf.*/
+/* 
+	* Implement setbuf using setvbuf.
+	* This implementation sets line buffering if the stream is associated with a terminal device
+*/
 
 void
 my_setbuf(FILE *restrict fp,char *restrict buf){
@@ -11,7 +14,7 @@ my_setbuf(FILE *restrict fp,char *restrict buf){
 		struct stat sbuf;
 		if(fstat(fileno(fp), &sbuf) < 0)
 			err_ret("fstat error");
-		else if(S_ISBLK(sbuf.st_mode))
+		else if(S_ISBLK(sbuf.st_mode) || fp == stdin || fp == stdout || fp == stderr)
 			mode = _IOLBF;
 	}
 	setvbuf(fp, buf, mode, size);
