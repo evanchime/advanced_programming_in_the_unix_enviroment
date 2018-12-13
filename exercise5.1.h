@@ -10,7 +10,7 @@ my_setbuf(FILE *restrict fp,char *restrict buf){
 	if(buf == NULL){
 		size = 0;
 		mode = _IONBF;
-	}else if(fp == stdin || fp == stdout || fp == stderr){// set line buffering if the stream is associated with a terminal device, otherwise full buffering
+	}else if(fp == stdin || fp == stdout || fp == stderr){// set line buffering if stream associated with stdin/out/err, otherwise full buffering
 		mode = _IOLBF;
 	}
 	setvbuf(fp, buf, mode, size);
