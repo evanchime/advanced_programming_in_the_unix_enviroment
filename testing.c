@@ -8,6 +8,6 @@ main()
 	char *s = "hello";
 	int x = 99;
 
-	printf("%s\n%s","obi"a"om","oooooooo\n");
+	printf("obi"s);
 	exit(0);
 }
