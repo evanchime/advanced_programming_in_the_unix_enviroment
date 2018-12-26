@@ -1,3 +1,11 @@
+/*
+	*Recall the typical arrangement of memory in Figure7.6. 
+	*Because the stack frames corresponding to each function call areusually stored in the stack, 
+	*and because after a vfork the child runs in the address space of the parent, 
+	*what happens if the call to vfork is from a function other than main and the child does a return from this function after the vfork?
+	*Write a test program to verify this, and draw a picture of what’s happening.
+*/
+
 #include "apue.h" 
 #include "standarderrorroutines.h"
 
