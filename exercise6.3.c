@@ -1,6 +1,24 @@
 /*
 	* Write a program that calls uname and prints all the ﬁelds in the utsname structure. 
 	* Compare the output to the output from the uname(1) command.
+	* the following is the list of options available from the command line
+	* 	-a, --all
+          		print all information
+
+        *	-n, --nodename
+                	print the network node hostname
+
+        *	-r, --kernel-release
+                	print the kernel release
+
+        *	-m, --machine
+                	print the machine hardware name
+
+        *	-o, --operating-system
+                	print the operating system
+
+        *	-v  --version
+                	output version information and exit
 */
 
 #include "apue.h"
