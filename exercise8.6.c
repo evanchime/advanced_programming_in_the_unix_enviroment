@@ -5,7 +5,6 @@
 #include "apue.h" 
 #include "standarderrorroutines.h"
 
-
 int
 main(void)
 {
@@ -20,7 +19,6 @@ main(void)
 	
 	/* parent continues here */
 	sleep(3);
-	
 	if((status = system("ps")) == -1 || status == 127)
 		err_sys("system error");
 
