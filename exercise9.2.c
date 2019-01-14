@@ -6,7 +6,6 @@
 #include "apue.h" 
 #include "standarderrorroutines.h"
 
-
 int 
 main(void)
 {
