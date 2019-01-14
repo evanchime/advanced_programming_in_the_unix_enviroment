@@ -11,7 +11,7 @@ main(void)
 		err_sys("fork error");
 	}else if (pid == 0) { /* child */
 		sleep(4); // parent go first
-		if( getpgrp() == setsid())
+		if(setsid() == getpgrp()) // call getpgrp() first and code breaks
 			printf("child becomes a process group leader and child no longer has a controlling terminal");
 		else
 			printf("algorithm error");
