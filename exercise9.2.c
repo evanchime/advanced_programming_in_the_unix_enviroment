@@ -15,7 +15,7 @@ main(void)
 			printf("child becomes a process group leader and child no longer has a controlling terminal");
 		else
 			printf("algorithm error");
-		exit(0);
+		exit(0); // child terminates
 	}else
 		exit(0); // parent terminates
 }
