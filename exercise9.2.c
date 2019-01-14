@@ -1,3 +1,8 @@
+/*
+        *Write a small program that calls fork and has the child create a new session. 
+        *Verify that the child becomes a process group leader and that the child no longer has a controlling terminal.
+*/
+
 #include "apue.h" 
 #include "standarderrorroutines.h"
 
