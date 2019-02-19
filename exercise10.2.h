@@ -1,3 +1,6 @@
+#ifndef _SIG2STR_H 
+#define _SIG2STR_H
+
 /*
     *Implement the sig2str function described in Section 10.22.
     *this implementation is for solaris
@@ -15,27 +18,6 @@
     * The caller must ensure that the memory is large enough to hold the longest string, including the terminating null byte. 
     * Solaris provides the constant SIG2STR_MAX in <signal.h> to deﬁne the maximum string length.
 */
-int sig2str(int signo, char *str);
-
-int 
-main(int argc, char const *argv[])
-{
-    
-    char *x = malloc(32);
-    //x = memmove(x, "w", sizeof("w"));
-
-
-    //printf("%s", x);
-
-    sig2str(36, x);
-
-    printf("%s", x);
-    
-    free(x);
-    
-
-    exit(0);
-}
 
 int sig2str(int signo, char *str){
 
@@ -196,7 +178,7 @@ int sig2str(int signo, char *str){
     return 0;
 }
 
-
+#endif /* _SIG2STR_H */
 
 
 
