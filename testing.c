@@ -170,9 +170,14 @@ void gg(const char *s){
 int 
 main(int argc, char const *argv[])
 {
-	timer_declare(7, &gg("first timer"));
-	timer_declare(4, &gg("second timer"));
-	timer_declare(12, &gg("third timer"));
+	//Myfunc gg1 = gg("first timer");
+	//Myfunc gg2 = gg("second timer");
+	//Myfunc gg3 = gg("third timer");
+
+
+	timer_declare(7, gg);
+	timer_declare(4, gg);
+	timer_declare(12, gg);
 	//unsigned int x = -1;
 	//printf("%u", (1  << ((sizeof(time_t) << 3) - 1)) - 1);/* code */
 	//printf("%d", sizeof(time_t));
