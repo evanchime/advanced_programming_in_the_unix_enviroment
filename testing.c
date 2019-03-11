@@ -7,13 +7,12 @@
 
 #define MAX_TIMERS	10	/* number of timers */
 typedef time_t TIME;		/* how time is actually stored */
-typedef void Myfunc(const char*);
 #define VERY_LONG_TIME	(1  << ((sizeof(TIME) << 3) - 1)) - 1	/* longest time possible */
 
 struct timer {
 	int inuse;		/* TRUE if in use */
 	TIME time;		/* relative time to wait */
-	Myfunc *event;		/* set to TRUE at timeout */
+	char *event;		/* set to TRUE at timeout */
 } timers[MAX_TIMERS];		/* set of timers */
 
 struct timer *timer_next = NULL;/* timer we expect to run down next */
@@ -21,7 +20,7 @@ TIME time_timer_set;		/* time when physical timer was set */
 sigset_t newmask, oldmask;      /* for signal masks */
 
 void timers_update();		/* subtract time from all timers, enabling any that run out along the way */
-static void sig_alarm(int);     /* SIGALRM handler */
+static void sig_alrm(int);     /* SIGALRM handler */
 void disable_sigalrm_interrupts(void); /* disable SIGALRM */
 void enable_sigalrm_interrupts(void); /* enable SIGALRM */
 
@@ -30,7 +29,7 @@ void
 timers_init() {
 	struct timer *t;
 
-	for (t=timers;t<&timers[MAX_TIMERS];t++)
+	for (t = timers; t < &timers[MAX_TIMERS]; t++)
 		t->inuse = FALSE;
 }
 
@@ -100,7 +99,7 @@ timers_update(TIME time)
 			} else { /* expired */
 				/* tell scheduler */
 				//*t->event = TRUE;
-				t->event("tt");
+				printf("%s", t->event);
 				t->inuse = 0;	/* remove timer */
 			}
 		}
@@ -111,14 +110,14 @@ timers_update(TIME time)
 }
 
 struct timer *
-timer_declare(unsigned int time_, Myfunc *event)		/* time to wait in secs */
+timer_declare(unsigned int time_, char *event)		/* time to wait in secs */
 {
 	struct timer *t;
 
 	disable_sigalrm_interrupts();
 
 	if (time_ == 0) {
-		timers_update(alarm(time));
+		timers_update(alarm(time_));
 		enable_sigalrm_interrupts();
 		return 0;
 	}
@@ -154,7 +153,7 @@ timer_declare(unsigned int time_, Myfunc *event)		/* time to wait in secs */
 }
 
 static void 
-sig_alarm(int signo) { 
+sig_alrm(int signo) { 
 	timers_update(time(NULL) - time_timer_set);
 	/* start physical timer for next shortest time if one exists */
 	if (timer_next) {
@@ -163,24 +162,18 @@ sig_alarm(int signo) {
 	}	
 }
 
-void gg(const char *s){
-	printf("%s", s);
-}
-
 int 
 main(int argc, char const *argv[])
 {
-	//Myfunc gg1 = gg("first timer");
-	//Myfunc gg2 = gg("second timer");
-	//Myfunc gg3 = gg("third timer");
 
+	if (signal(SIGALRM, sig_alrm) == SIG_ERR)
+		err_sys("can’t catch SIGALRM");
 
-	timer_declare(7, gg);
-	timer_declare(4, gg);
-	timer_declare(12, gg);
-	//unsigned int x = -1;
-	//printf("%u", (1  << ((sizeof(time_t) << 3) - 1)) - 1);/* code */
-	//printf("%d", sizeof(time_t));
-	//printf("%u", x);
+	timers_init(); 
+
+	timer_declare(7, "first timer");
+	timer_declare(4, "second timer");
+	timer_declare(12, "third timer");
+
 	return 0;
 }
