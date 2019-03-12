@@ -166,14 +166,16 @@ int
 main(int argc, char const *argv[])
 {
 
-	if (signal(SIGALRM, sig_alrm) == SIG_ERR)
+	/*if (signal(SIGALRM, sig_alrm) == SIG_ERR)
 		err_sys("can’t catch SIGALRM");
 
 	timers_init(); 
 
 	timer_declare(7, "first timer");
 	timer_declare(4, "second timer");
-	timer_declare(12, "third timer");
+	timer_declare(12, "third timer");*/
 
+	//printf("%ld", ((TIME)1  << ((sizeof(TIME) << 3) - 1)) - 1);
+	printf("%d", sizeof(TIME));
 	return 0;
 }
