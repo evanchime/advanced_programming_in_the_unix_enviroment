@@ -1,6 +1,7 @@
 #include "apue.h" 
 #include <pthread.h> 
 #include <limits.h> 
+#include "standarderrorroutines.h"
 #include <sys/time.h> 
 
 #define NTHR 8 /*number of threads */ 
