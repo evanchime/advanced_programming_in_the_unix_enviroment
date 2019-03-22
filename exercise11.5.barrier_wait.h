@@ -4,13 +4,22 @@ pthread_mutex_t balock = PTHREAD_MUTEX_INITIALIZER;
 struct {
     pthread_mutex_t balock;
     int tcount;
+    int flag;
 }x;
 
 int pthread_barrier_wait(pthread_barrier_t *barrier){
-    static tcount = 0;
+    static tcount = 1;
     pthread_mutex_lock(&x.balock); 
-    while (++tcount != x.tcount) 
-        pthread_cond_wait(bready, &balock); 
+    while (tcount != x.tcount){ 
+        ++tcount;
+        pthread_cond_wait((pthread_cond_t *)barrier, &x.balock);
+    }
+    if(flag){
+        flag = 0;
+        pthread_cond_broadcast((pthread_cond_t *)barrier);
+    }
+    pthread_mutex_unlock(&x.balock);
+    
 }
 
 
