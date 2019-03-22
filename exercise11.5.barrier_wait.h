@@ -1,12 +1,16 @@
+pthread_cond_t bready = PTHREAD_COND_INITIALIZER; 
+pthread_mutex_t balock = PTHREAD_MUTEX_INITIALIZER;
+
 struct {
     pthread_mutex_t balock;
     int tcount;
-}
+}x;
 
 int pthread_barrier_wait(pthread_barrier_t *barrier){
-
-    pthread_mutex_lock(&qlock); 
-    while (workq == NULL) pthread_cond_wait(&qready, &qlock); 
+    static tcount = 0;
+    pthread_mutex_lock(&x.balock); 
+    while (++tcount != x.tcount) 
+        pthread_cond_wait(bready, &balock); 
 }
 
 
