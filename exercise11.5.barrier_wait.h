@@ -1,3 +1,9 @@
+struct{
+	pthread_mutex_t balock;
+	int tcount;
+	int flag;
+}x;
+
 int 
 pthread_barrier_init(pthread_barrier_t *restrict barrier, const pthread_barrierattr_t *restrict attr, unsigned int count){
     if(pthread_mutex_init(&x.balock, (const pthread_mutexattr_t *)attr) != 0)
@@ -11,12 +17,6 @@ pthread_barrier_init(pthread_barrier_t *restrict barrier, const pthread_barriera
 
 pthread_t *pmtid;
 
-struct {
-    pthread_mutex_t balock;
-    int tcount;
-    int flag;
-}x;
-
 int 
 pthread_barrier_wait(pthread_barrier_t *barrier){
     static tcount = 1;
@@ -28,8 +28,8 @@ pthread_barrier_wait(pthread_barrier_t *barrier){
             return errno;
     }
     
-    if(flag){
-        flag = 0;
+    if(x.flag){
+        x.flag = 0;
         if(pthread_cond_broadcast((pthread_cond_t *)barrier) != 0)
             return errno;
     }

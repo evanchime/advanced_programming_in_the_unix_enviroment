@@ -3,6 +3,7 @@
 #include <limits.h> 
 #include "standarderrorroutines.h"
 #include <sys/time.h> 
+#include "exercise11.5.barrier_wait.h"
 
 #define NTHR 8 /*number of threads */ 
 #define NUMNUM 8000000L /* number of numbers to sort */ 
