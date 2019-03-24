@@ -13,7 +13,7 @@ long nums[NUMNUM];
 long snums[NUMNUM]; 
 
 pthread_barrier_t b; 
-pthread_t mtid;
+pthread_t mtid; // master thread id
 
 #ifdef SOLARIS 
 #define heapsort qsort 
