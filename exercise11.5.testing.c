@@ -13,6 +13,8 @@ long nums[NUMNUM];
 long snums[NUMNUM]; 
 
 pthread_barrier_t b; 
+pthread_t mtid;
+
 #ifdef SOLARIS 
 #define heapsort qsort 
 #else 
@@ -94,7 +96,11 @@ complong(const void *arg1, const void *arg2) {
            if (err != 0) 
                 err_exit(err, "can’t create thread"); 
         } 
-        pthread_barrier_wait(&b); merge(); 
+        
+        mtid = pthread_self();
+
+        pthread_barrier_wait(&b); 
+	merge(); 
         gettimeofday(&end, NULL); 
         /* 
         *Print the sorted list. 

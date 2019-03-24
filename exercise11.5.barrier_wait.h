@@ -1,7 +1,12 @@
-struct{
-	pthread_mutex_t balock;
-	int tcount;
-	int flag;
+/*
+ 	*What synchronization primitives would you need to implement a barrier? 
+	*Provide an implementation of thepthread_barrier_waitfunction.
+*/ 
+
+struct{ //helper struct
+	pthread_mutex_t balock; // to lock the condition
+	int tcount; // to hold barrier count
+	int flag; // checks the last thread to complete
 }x;
 
 int 
@@ -15,11 +20,11 @@ pthread_barrier_init(pthread_barrier_t *restrict barrier, const pthread_barriera
     return 0;
 }
 
-pthread_t *pmtid;
+extern pthread_t mtid; // master thread id
 
 int 
 pthread_barrier_wait(pthread_barrier_t *barrier){
-    static tcount = 1;
+    static int tcount = 1;
     pthread_mutex_lock(&x.balock); 
     
     while (tcount != x.tcount){ 
@@ -36,7 +41,7 @@ pthread_barrier_wait(pthread_barrier_t *barrier){
 
     pthread_mutex_unlock(&x.balock);
 
-    if (pthread_equal(pthread_self(), *pmtid)) {
+    if (pthread_equal(pthread_self(), mtid)) {
         return PTHREAD_BARRIER_SERIAL_THREAD;
     }else{
         return 0;
