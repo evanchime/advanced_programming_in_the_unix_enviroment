@@ -17,7 +17,7 @@ void WAIT_PARENT(void);
 void TELL_PARENT(pid_t pid); 
 static void sig_usr(int signo);
 void pr_mask(const char *str);
-//Sigfunc * signal(int signo, Sigfunc *func);
+Sigfunc * signal(int signo, Sigfunc *func);
 
 int 
 main(void) 
@@ -60,14 +60,14 @@ void sig_usr(int signo) /* one signal handler for SIGUSR1 and SIGUSR2 */
 
 void 
 TELL_WAIT(void) { 
-    if (signal(SIGUSR1, sig_usr) == SIG_ERR) 
+    if (signal(/*SIGUSR1*/SIGURG, sig_usr) == SIG_ERR) 
         err_sys("signal(SIGUSR1) error"); 
-    if (signal(SIGUSR2, sig_usr) == SIG_ERR) 
+    if (signal(/*SIGUSR2*/SIGURG, sig_usr) == SIG_ERR) 
         err_sys("signal(SIGUSR2) error"); 
     sigemptyset(&zeromask); 
     sigemptyset(&newmask); 
-    sigaddset(&newmask, SIGUSR1); 
-    sigaddset(&newmask, SIGUSR2); 
+    sigaddset(&newmask, /*SIGUSR1*/SIGURG); 
+    sigaddset(&newmask, /*SIGUSR2*/SIGURG); 
     /* Block SIGUSR1 and SIGUSR2, and save current signal mask */ 
     if (sigprocmask(SIG_BLOCK, &newmask, &oldmask) < 0) 
         err_sys("SIG_BLOCK error"); 
@@ -75,7 +75,7 @@ TELL_WAIT(void) {
 
 void 
 TELL_PARENT(pid_t pid) { 
-    kill(pid, SIGUSR2); /* tell parent we’re done */ 
+    kill(pid, /*SIGUSR2*/SIGURG); /* tell parent we’re done */ 
 } 
 
 void 
@@ -90,7 +90,7 @@ WAIT_PARENT(void) {
 
 void 
 TELL_CHILD(pid_t pid) { 
-    kill(pid, SIGUSR1); /* tell child we’re done */ 
+    kill(pid, /*SIGUSR1*/SIGURG); /* tell child we’re done */ 
 } 
 
 void 
@@ -172,7 +172,7 @@ pr_mask(const char *str) {
 }
 
 /* Reliable version of signal(), using POSIX sigaction(). */ 
-/*Sigfunc 
+Sigfunc 
 * signal(int signo, Sigfunc *func) { 
     struct sigaction act, oact; 
     act.sa_handler = func; 
@@ -189,4 +189,4 @@ pr_mask(const char *str) {
     if (sigaction(signo, &act, &oact) < 0) 
         return(SIG_ERR); 
     return(oact.sa_handler); 
-}*/
+}
