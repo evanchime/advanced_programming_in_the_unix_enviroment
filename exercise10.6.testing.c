@@ -16,16 +16,18 @@ void TELL_CHILD(pid_t pid);
 void WAIT_PARENT(void);
 void TELL_PARENT(pid_t pid); 
 static void sig_usr(int signo);
+void pr_mask(const char *str);
+//Sigfunc * signal(int signo, Sigfunc *func);
 
 int 
 main(void) 
 { 
+
+    TELL_WAIT();
     int fd;
     int counter = 0; 
     pid_t pid;
     char buf[MAXLINE]; 
-
-    TELL_WAIT();
 
     if ((fd = open("hello", O_WRONLY | O_CREAT, FILE_MODE)) < 0) {
         err_sys("open error");
@@ -44,7 +46,7 @@ main(void)
     }else {  // parent 
         while(1){
             WAIT_CHILD();
-            write_to_file(fd, buf, counter++, "child");
+            write_to_file(fd, buf, counter++, "parent");
             TELL_CHILD(pid);
         }
     } 
@@ -143,3 +145,48 @@ write_to_file(int fd, char buf[], int counter, const char *str)
 }
 
 
+void 
+pr_mask(const char *str) { 
+    sigset_t sigset; 
+    int errno_save; 
+    errno_save = errno; /* we can be called by signal handlers */ 
+    if (sigprocmask(0, NULL, &sigset) < 0) { 
+        err_ret("sigprocmask error"); 
+    }else { 
+        printf("%s", str); 
+        if (sigismember(&sigset, SIGINT)) 
+            printf(" SIGINT"); 
+        if (sigismember(&sigset, SIGQUIT)) 
+            printf(" SIGQUIT"); 
+        if (sigismember(&sigset, SIGUSR1)) 
+            printf(" SIGUSR1"); 
+        if (sigismember(&sigset, SIGUSR2)) 
+            printf(" SIGUSR2");
+        if (sigismember(&sigset, SIGALRM)) 
+            printf(" SIGALRM"); 
+        /* remaining signals can go here */ 
+        printf("\n"); 
+    } 
+    
+    errno = errno_save; /* restore errno */ 
+}
+
+/* Reliable version of signal(), using POSIX sigaction(). */ 
+/*Sigfunc 
+* signal(int signo, Sigfunc *func) { 
+    struct sigaction act, oact; 
+    act.sa_handler = func; 
+    sigemptyset(&act.sa_mask); 
+    act.sa_flags = 0; 
+    if (signo == SIGALRM) { 
+#ifdef SA_INTERRUPT 
+        act.sa_flags |= SA_INTERRUPT; 
+#endif 
+    }else { 
+        act.sa_flags |= SA_RESTART; 
+    }
+    act.sa_flags |= SA_RESTART; 
+    if (sigaction(signo, &act, &oact) < 0) 
+        return(SIG_ERR); 
+    return(oact.sa_handler); 
+}*/
