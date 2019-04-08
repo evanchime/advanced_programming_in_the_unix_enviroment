@@ -19,13 +19,13 @@ static void sig_usr(int signo);
 void pr_mask(const char *str);
 Sigfunc * signal(int signo, Sigfunc *func);
 
-static int counter = 0; 
 
 int 
 main(void) 
 { 
 
     TELL_WAIT();
+    int counter = 0; 
     int fd;
     pid_t pid;
     char buf[MAXLINE]; 
@@ -34,20 +34,22 @@ main(void)
         err_sys("open error");
     }
 
-    write_to_file(fd, buf, counter++, "parent");
+    write_to_file(fd, buf, counter, "parent");
 
     if ((pid = fork()) < 0) { 
         err_sys("fork error"); 
     }else if (pid == 0) { // child
+        sleep(1);
+        --counter;
         while(1){
-            write_to_file(fd, buf, counter++, "child");
+            write_to_file(fd, buf, counter += 2, "child");
             TELL_PARENT(getppid());
             WAIT_PARENT();
         }
     }else {  // parent 
         while(1){
             WAIT_CHILD();
-            write_to_file(fd, buf, counter++, "parent");
+            write_to_file(fd, buf, counter += 2, "parent");
             TELL_CHILD(pid);
         }
     } 
@@ -61,14 +63,14 @@ void sig_usr(int signo) /* one signal handler for SIGUSR1 and SIGUSR2 */
 
 void 
 TELL_WAIT(void) { 
-    if (signal(/*SIGUSR1*/SIGURG, sig_usr) == SIG_ERR) 
+    if (signal(SIGUSR1, sig_usr) == SIG_ERR) 
         err_sys("signal(SIGUSR1) error"); 
-    if (signal(/*SIGUSR2*/SIGURG, sig_usr) == SIG_ERR) 
+    if (signal(SIGUSR2, sig_usr) == SIG_ERR) 
         err_sys("signal(SIGUSR2) error"); 
     sigemptyset(&zeromask); 
     sigemptyset(&newmask); 
-    sigaddset(&newmask, /*SIGUSR1*/SIGURG); 
-    sigaddset(&newmask, /*SIGUSR2*/SIGURG); 
+    sigaddset(&newmask, SIGUSR1); 
+    sigaddset(&newmask, SIGUSR2); 
     /* Block SIGUSR1 and SIGUSR2, and save current signal mask */ 
     if (sigprocmask(SIG_BLOCK, &newmask, &oldmask) < 0) 
         err_sys("SIG_BLOCK error"); 
@@ -76,7 +78,7 @@ TELL_WAIT(void) {
 
 void 
 TELL_PARENT(pid_t pid) { 
-    kill(pid, /*SIGUSR2*/SIGURG); /* tell parent we’re done */ 
+    kill(pid, SIGUSR2); /* tell parent we’re done */ 
 } 
 
 void 
@@ -91,7 +93,7 @@ WAIT_PARENT(void) {
 
 void 
 TELL_CHILD(pid_t pid) { 
-    kill(pid, /*SIGUSR1*/SIGURG); /* tell child we’re done */ 
+    kill(pid, SIGUSR1); /* tell child we’re done */ 
 } 
 
 void 
