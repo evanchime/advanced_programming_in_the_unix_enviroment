@@ -19,13 +19,14 @@ static void sig_usr(int signo);
 void pr_mask(const char *str);
 Sigfunc * signal(int signo, Sigfunc *func);
 
+static int counter = 0; 
+
 int 
 main(void) 
 { 
 
     TELL_WAIT();
     int fd;
-    int counter = 0; 
     pid_t pid;
     char buf[MAXLINE]; 
 
