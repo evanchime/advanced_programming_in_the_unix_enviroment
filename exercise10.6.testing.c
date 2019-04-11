@@ -39,7 +39,6 @@ main(void)
     if ((pid = fork()) < 0) { 
         err_sys("fork error"); 
     }else if (pid == 0) { // child
-        sleep(1);
         --counter;
         while(1){
             write_to_file(fd, buf, counter += 2, "child");
