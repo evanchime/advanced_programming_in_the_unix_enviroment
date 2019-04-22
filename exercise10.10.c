@@ -44,7 +44,5 @@ main()
 			pr_tm_sec();
 		}
 	}
-
 	exit(0);
 }
-
