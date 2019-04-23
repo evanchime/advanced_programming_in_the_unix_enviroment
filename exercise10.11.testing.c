@@ -29,6 +29,9 @@ signal_intr(int signo, Sigfunc *func)
 int 
 main(int argc, char *argv[]) 
 { 
+	if (signal_intr(SIGXFSZ, sig_xfsz) == SIG_ERR)
+        	err_sys("signal(SIGXFSZ) error");
+
 	int n, fd; 
         char buf[BUFFSIZE];
 	
@@ -37,14 +40,13 @@ main(int argc, char *argv[])
        
         if ((fd = open(argv[1], O_RDONLY )) < 0) 
 	       err_sys("open error");	
-	if (signal_intr(SIGXFSZ, sig_xfsz) == SIG_ERR) 
-		err_sys("signal(SIGXFSZ) error"); 
 	
-	while ((n = read(fd, buf, BUFFSIZE)) > 0) 
+	while ((n = read(fd, buf, BUFFSIZE)) > 0){ 
 		if (write(STDOUT_FILENO, buf, n) != n){
 		        printf("%d\n", n);	
 			err_sys("write error");
-		} 
+		}
+	}	
 	if (n < 0) 
 		err_sys("read error"); 
 	
