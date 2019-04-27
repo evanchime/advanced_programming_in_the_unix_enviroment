@@ -1,6 +1,7 @@
 #include "apue.h" 
 #include "standarderrorroutines.h"
 #include <fcntl.h>
+#include <sys/resource.h>
 
 #define BUFFSIZE 100
 
@@ -29,9 +30,20 @@ signal_intr(int signo, Sigfunc *func)
 int 
 main(int argc, char *argv[]) 
 { 
-	if (signal_intr(SIGXFSZ, sig_xfsz) == SIG_ERR)
-        	err_sys("signal(SIGXFSZ) error");
+	if(signal_intr(SIGXFSZ, sig_xfsz) == SIG_ERR)
+		err_sys("signal(SIGXFSZ) error");
 
+	struct rlimit limit;
+	
+	if (getrlimit(RLIMIT_FSIZE, &limit) < 0) 
+		err_sys("getrlimit error");
+	
+	limit.rlim_cur = 1024;
+
+	if (setrlimit(RLIMIT_FSIZE, &limit) < 0) 
+		err_sys("setrlimit error");
+
+	printf("%ld\n", limit.rlim_cur);
 	int n, fd; 
         char buf[BUFFSIZE];
 	
