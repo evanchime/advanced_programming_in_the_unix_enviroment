@@ -30,14 +30,14 @@ pthread_mutex_t lock = PTHREAD_MUTEX_INITIALIZER;
 unsigned int
 sleep(unsigned int seconds) 
 {
-	int signop, err;
-	if ((err = pthread_mutex_lock(&lock)) != 0)
-                err_exit(err, "pthread_mutex_unlock error");
+	//int signop, err;
+	/*if ((err = pthread_mutex_lock(&lock)) != 0)
+                err_exit(err, "pthread_mutex_unlock error");*/
 
 	struct sigaction newact, oldact; 
 	sigset_t newmask, oldmask; 
 	unsigned int unslept; 
-	//int signop, err;
+	int signop, err;
 	
 	/* set our handler, save previous information */ 
 	newact.sa_handler = sig_alrm; 
@@ -51,8 +51,8 @@ sleep(unsigned int seconds)
 	if ((err = pthread_sigmask(SIG_BLOCK, &newmask, &oldmask)) != 0) 
 		err_exit(err, "SIG_BLOCK error");
 	
-	/*if ((err = pthread_mutex_lock(&lock)) != 0)
-                err_exit(err, "pthread_mutex_unlock error");*/
+	if ((err = pthread_mutex_lock(&lock)) != 0)
+                err_exit(err, "pthread_mutex_unlock error");
 	alarm(seconds); 
 	
 	/* wait for SIGALRM to occur */ 
@@ -61,8 +61,8 @@ sleep(unsigned int seconds)
 	/* some signal has been caught, SIGALRM is now blocked */ 
 	unslept = alarm(0); 
 
-	/*if ((err = pthread_mutex_unlock(&lock)) != 0)
-                err_exit(err, "pthread_mutex_unlock error");*/
+	if ((err = pthread_mutex_unlock(&lock)) != 0)
+                err_exit(err, "pthread_mutex_unlock error");
 
 	/* reset previous action */ 
 	sigaction(SIGALRM, &oldact, NULL); 
@@ -71,8 +71,8 @@ sleep(unsigned int seconds)
 	if ((err = pthread_sigmask(SIG_SETMASK, &oldmask, NULL)) != 0) 
 		err_exit(err, "SIG_SETMASK error");
 
-	if ((err = pthread_mutex_unlock(&lock)) != 0)
-                err_exit(err, "pthread_mutex_unlock error");
+	/*if ((err = pthread_mutex_unlock(&lock)) != 0)
+                err_exit(err, "pthread_mutex_unlock error");*/
 
 	return(unslept); 
 }

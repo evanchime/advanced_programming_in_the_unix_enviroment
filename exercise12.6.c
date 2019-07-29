@@ -1,8 +1,8 @@
 #include "exercise12.6.h"
 #include <sys/time.h>
 
-#define NTHR 1
-#define UPPER 10
+#define NTHR 2
+#define UPPER 4
 #define LOWER 1
 
 //pthread_barrier_t b;
@@ -32,29 +32,29 @@ main(void)
 	int err, i; 
 	pthread_t tid;
 
-	/*srandom(time(0));
+	srandom(time(0));
 
 	for (i = 0; i < NTHR; i++) { 
 		struct arg *arg;
 		arg->thrdno = i + 1;
-		arg->thrdsecs = (random() % (UPPER - LOWER + 1)) + LOWER;
+		arg->thrdsecs =   (random() % (UPPER - LOWER + 1)) + LOWER;
 		err = pthread_create(&tid, NULL, thr_fn, (void *)arg); 
 		if (err != 0) 
 			err_exit(err, "can’t create thread"); 
-	}*/
+	}
 
-	struct arg *arg;
+	/*struct arg *arg;
         arg->thrdno = 1;
-        arg->thrdsecs = 2;
+        arg->thrdsecs = 2;*/
 
 	//pthread_barrier_init(&b, NULL, NTHR + 1);
 
-	err = pthread_create(&tid, NULL, thr_fn, (void *)arg);
+	/*err = pthread_create(&tid, NULL, thr_fn, (void *)arg);
                 if (err != 0)
-                        err_exit(err, "can’t create thread");
+                        err_exit(err, "can’t create thread");*/
 
 	printf("before main thread sleep\n");
-	sleep(3);
+	sleep(4);
 	//pthread_barrier_wait(&b);
 	printf("After main thread sleep\n");
 	
