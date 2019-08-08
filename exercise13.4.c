@@ -12,7 +12,7 @@ main(int argc, char *argv[]){
 	/*int fd;
 	if ((fd = open(argv[1], O_RDWR|O_CREAT|O_TRUNC, FILE_MODE)) < 0) 
 		err_sys("open error");*/
-	//fprintf(fp, "before daemon");
+	fprintf(fp, "before daemon");
 	daemonize(argv[0]); //daemonize
 	/*FILE *fp;
         if((fp = fopen(argv[1], "w+") == NULL))
