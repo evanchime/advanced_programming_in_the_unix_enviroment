@@ -1,3 +1,14 @@
+/*
+	*Write a program that calls the daemonize function in Figure13.1. 
+	*After calling this function, call getlogin (Section 8.15) to see whether the process has a login name now that it has become a daemon. 
+	*Print the results to a ﬁle.
+*/
+
+/*
+	* compile as sudoer
+        * run as sudoer	
+*/
+
 #include "standarderrorroutines.h"
 #include "daemonize.h"
 
@@ -6,20 +17,12 @@ main(int argc, char *argv[]){
 	if (argc != 2) 
 		err_quit("usage: ftw <starting-pathname>");
 	char *name;
-	FILE *fp;
-        if((fp = fopen(argv[1], "w+") == NULL))
-	        err_sys("fopen failed");
-	/*int fd;
-	if ((fd = open(argv[1], O_RDWR|O_CREAT|O_TRUNC, FILE_MODE)) < 0) 
-		err_sys("open error");*/
-	fprintf(fp, "before daemon");
 	daemonize(argv[0]); //daemonize
-	/*FILE *fp;
-        if((fp = fopen(argv[1], "w+") == NULL))
-                err_sys("fopen failed");*/
-	//fprintf(fp, "in daemon now");
+	FILE *fp;
+        if((fp = fopen(argv[1], "w+")) == NULL)
+                err_sys("fopen failed");
 	if((name = getlogin()) == NULL)
-		fprintf(fp, "can't daemonize");
+		fprintf(fp, "can't get login name");
 	else
 		fprintf(fp, "login name: %s", name);
 
