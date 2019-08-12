@@ -56,7 +56,8 @@ void daemonize(const char *cmd) {
 		*Attach file descriptors 0, 1, and 2 to /dev/null. 
 	*/ 
 	fd0 = open("/dev/null", O_RDWR); 
-	fd1 = dup(0); fd2 = dup(0); 
+	fd1 = dup(0); 
+	fd2 = dup(0); 
 	/* 
 		*Initialize the log file. 
 	*/ 
