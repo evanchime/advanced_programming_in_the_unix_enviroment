@@ -2,6 +2,7 @@
 #include <fcntl.h>
 #include <errno.h>
 #include <sys/wait.h>
+#include <lock.h>
 #include "standarderrorroutines.h"
 
 int
