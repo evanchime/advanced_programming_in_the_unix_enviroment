@@ -34,7 +34,7 @@ main(int argc, char *argv[])
 			err_sys("fork error");
 		}else if(pid2 != 0){ /* parent */
 			write_lock(fd, 0, SEEK_SET, 0);
-			printf("from parent after write lock");
+			printf("from parent after write lock\n");
 			while(waitpid(pid2, &stat, 0) < 0)
 				if(errno != EINTR)
 					exit(-1); /* error other than EINTR from waitpid() */
@@ -48,7 +48,7 @@ main(int argc, char *argv[])
 					err_sys("fork error");
 				}else if(pid == 0){ /* child */
 					read_lock(fd, 0, SEEK_SET, 0);
-					printf("from child %d", i + 1);
+					printf("from child %d\n", i + 1);
 				}else{
 					while((wait(&stat) < 0) || (++completed == processes)){
 						if(completed == processes)
