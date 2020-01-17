@@ -1,9 +1,9 @@
-#include "apue.h"
+#include "../apue.h"
 #include <fcntl.h>
 #include <errno.h>
 #include <sys/wait.h>
-#include "lock.h"
-#include "standarderrorroutines.h"
+#include "../lock.h"
+#include "../standarderrorroutines.h"
 
 
 int
