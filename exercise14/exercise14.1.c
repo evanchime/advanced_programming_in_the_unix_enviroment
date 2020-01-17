@@ -42,8 +42,8 @@ main(int argc, char *argv[])
 					exit(-1); /* error other than EINTR from waitpid() */
 
 		}else{
+			pid_t pid;
 			for(int i = MY_PROCESSES; i > 0; --i){
-				pid_t pid;
 				if((pid = fork()) < 0){
 					err_sys("fork error");
 				}else if(pid == 0){ /* child */
