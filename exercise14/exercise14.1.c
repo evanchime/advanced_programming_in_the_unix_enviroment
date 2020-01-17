@@ -6,6 +6,8 @@
 #include "../lock.h"
 #include "../standarderrorroutines.h"
 
+#define MY_PROCESSES 10
+
 int
 main(int argc, char *argv[])
 {
@@ -40,9 +42,7 @@ main(int argc, char *argv[])
 					exit(-1); /* error other than EINTR from waitpid() */
 
 		}else{
-			int processes = 10;
-			int completed = 0;
-			for(int i = 0; i < processes; i++){
+			for(int i = MY_PROCESSES; i > 0; --i){
 				pid_t pid;
 				if((pid = fork()) < 0){
 					err_sys("fork error");
