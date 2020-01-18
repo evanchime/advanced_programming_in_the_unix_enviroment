@@ -47,7 +47,7 @@ main(int argc, char *argv[])
 				if((pid = fork()) < 0){
 					err_sys("fork error");
 				}else if(pid == 0){ /* child */
-					if (execlp("./exercise14.1.helper", "exercise14.1.helper", argv[1], (char *)0) < 0)
+					if (execlp("./exercise14.1.helper1", "exercise14.1.helper1", argv[1], (char *)0) < 0)
 						err_sys("execlp error");
 				}
 			}
