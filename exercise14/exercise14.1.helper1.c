@@ -18,7 +18,7 @@ main(int argc, char *argv[])
                 err_sys("open error");
 
 	read_lock(fd, 0, SEEK_SET, 0);
+	sleep(300);
 	printf("yes\n");
-	alarm(300);
 	exit(0);
 }
