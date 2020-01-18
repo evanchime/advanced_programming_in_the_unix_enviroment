@@ -35,11 +35,13 @@ main(int argc, char *argv[])
 		if((pid2 = fork()) < 0){
 			err_sys("fork error");
 		}else if(pid2 != 0){ /* parent */
-			write_lock(fd, 0, SEEK_SET, 0);
+			if (execlp("./exercise14.1.helper2", "exercise14.1.helper2", argv[1], (char *)0) < 0)
+				err_sys("execlp error");
+			/*write_lock(fd, 0, SEEK_SET, 0);
 			printf("from parent after write lock\n");
 			while(waitpid(pid2, &stat, 0) < 0)
 				if(errno != EINTR)
-					exit(-1); /* error other than EINTR from waitpid() */
+					exit(-1); *//* error other than EINTR from waitpid() */
 
 		}else{
 			pid_t pid;
