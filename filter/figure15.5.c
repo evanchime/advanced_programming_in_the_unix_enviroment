@@ -10,7 +10,7 @@ main(void)
 	char line[MAXLINE];
 	FILE *fpin;
 
-	if ((fpin = popen("./myuclc", "r")) == NULL)
+	if ((fpin = popen("./myuclc", "r")) == NULL)           
 		err_sys("popen error");
 	for ( ; ; ) {
 		fputs("prompt> ", stdout);
