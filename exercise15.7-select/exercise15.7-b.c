@@ -1,3 +1,10 @@
+/*
+	* Explain how select and poll handle an input descriptor that is a pipe, when the pipe is closed  by  the  writer.
+	* To determine  the  answer,write  two  small  test  programs:  one  using select and one using poll.
+	* Redo  this  exercise,  looking  at  an  output  descriptor  that  is  a  pipe,  when  the  read  end  is closed
+	* This is looking at an output descriptor that is  a  pipe,  when  the  read  end is closed
+*/
+
 #include "../apue.h"
 #include "../standarderrorroutines.h"
 #include <sys/select.h>
@@ -10,10 +17,9 @@ main(void)
 	int     n, fd1[2], fd2[2];
 	pid_t   pid;
 	char    line[MAXLINE];
-	//int fpind;
         fd_set  wset;
 	
-	FD_ZERO(&wset);
+	FD_ZERO(&wset); 
 
 	if (signal(SIGPIPE, sig_pipe) == SIG_ERR)
 		err_sys("signal error");
@@ -42,7 +48,6 @@ main(void)
 					err_sys("read error from pipe");
 				if (n == 0) {
 					err_msg("child closed pipe");
-					break;
 				}
 				line[n] = 0;    /* null terminate */
 				if (fputs(line, stdout) == EOF)
