@@ -28,6 +28,9 @@ main(void){
 
 	TELL_WAIT();
 
+/*	if (setvbuf(stdout, NULL, _IOLBF, 0) != 0) // uncomment to ensure line buffering
+		err_sys("setvbuf error");
+*/
 	if ((pid = fork()) < 0) {
 		err_sys("fork error");
 	}else if (pid > 0) {/* parent */
