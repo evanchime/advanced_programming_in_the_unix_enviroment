@@ -1,0 +1,36 @@
+Building the main Guest Additions 6.1.34 module for kernel 5.14.0-124.el9.x86_64.
+Error building the module.  Build output follows.
+make V=1 CONFIG_MODULE_SIG= CONFIG_MODULE_SIG_ALL= -C /lib/modules/5.14.0-124.el9.x86_64/build M=/tmp/vbox.0 SRCROOT=/tmp/vbox.0 -j2 modules
+make[1]: warning: -j2 forced in submake: resetting jobserver mode.
+test -e include/generated/autoconf.h -a -e include/config/auto.conf || (		\
+echo >&2;							\
+echo >&2 "  ERROR: Kernel configuration is invalid.";		\
+echo >&2 "         include/generated/autoconf.h or include/config/auto.conf are missing.";\
+echo >&2 "         Run 'make oldconfig && make prepare' on kernel src to fix it.";	\
+echo >&2 ;							\
+/bin/false)
+make -f ./scripts/Makefile.build obj=/tmp/vbox.0 \
+single-build= \
+need-builtin=1 need-modorder=1
+  gcc -Wp,-MMD,/tmp/vbox.0/.VBoxGuest-linux.o.d -nostdinc -I./arch/x86/include -I./arch/x86/include/generated  -I./include -I./arch/x86/include/uapi -I./arch/x86/include/generated/uapi -I./include/uapi -I./include/generated/uapi -include ./include/linux/compiler-version.h -include ./include/linux/kconfig.h -include ./include/linux/compiler_types.h -D__KERNEL__ -fmacro-prefix-map=./= -Wall -Wundef -Werror=strict-prototypes -Wno-trigraphs -fno-strict-aliasing -fno-common -fshort-wchar -fno-PIE -Werror=implicit-function-declaration -Werror=implicit-int -Werror=return-type -Wno-format-security -std=gnu11 -mno-sse -mno-mmx -mno-sse2 -mno-3dnow -mno-avx -fcf-protection=none -m64 -falign-jumps=1 -falign-loops=1 -mno-80387 -mno-fp-ret-in-387 -mpreferred-stack-boundary=3 -mskip-rax-setup -mtune=generic -mno-red-zone -mcmodel=kernel -Wno-sign-compare -fno-asynchronous-unwind-tables -mindirect-branch=thunk-extern -mindirect-branch-register -fno-jump-tables -fno-delete-null-pointer-checks -Wno-frame-address -Wno-format-truncation -Wno-format-overflow -Wno-address-of-packed-member -O2 -fno-allow-store-data-races -Wframe-larger-than=2048 -fstack-protector-strong -Wimplicit-fallthrough=5 -Wno-unused-but-set-variable -Wno-unused-const-variable -fno-stack-clash-protection -g -pg -mrecord-mcount -mfentry -DCC_USING_FENTRY -fno-inline-functions-called-once -Wdeclaration-after-statement -Wvla -Wno-pointer-sign -Wno-stringop-truncation -Wno-zero-length-bounds -Wno-array-bounds -Wno-stringop-overflow -Wno-restrict -Wno-maybe-uninitialized -Wno-alloc-size-larger-than -fno-strict-overflow -fno-stack-check -fconserve-stack -Werror=date-time -Werror=incompatible-pointer-types -Werror=designated-init -Wno-packed-not-aligned -Wno-declaration-after-statement -fno-pie -include /tmp/vbox.0/include/VBox/VBoxGuestMangling.h -I./include -I/tmp/vbox.0/ -I/tmp/vbox.0/include -I/tmp/vbox.0/r0drv/linux -D__KERNEL__ -DMODULE -DRT_WITHOUT_PRAGMA_ONCE -DVBOX -DRT_OS_LINUX -DIN_RING0 -DIN_RT_R0 -DIN_GUEST -DIN_GUEST_R0 -DIN_MODULE -DRT_WITH_VBOX -DVBGL_VBOXGUEST -DVBOX_WITH_HGCM -DVBOX_WITH_64_BITS_GUESTS -DRT_ARCH_AMD64  -DMODULE  -DKBUILD_BASENAME='"VBoxGuest_linux"' -DKBUILD_MODNAME='"vboxguest"' -D__KBUILD_MODNAME=kmod_vboxguest -c -o /tmp/vbox.0/VBoxGuest-linux.o /tmp/vbox.0/VBoxGuest-linux.c
+  gcc -Wp,-MMD,/tmp/vbox.0/.VBoxGuest.o.d -nostdinc -I./arch/x86/include -I./arch/x86/include/generated  -I./include -I./arch/x86/include/uapi -I./arch/x86/include/generated/uapi -I./include/uapi -I./include/generated/uapi -include ./include/linux/compiler-version.h -include ./include/linux/kconfig.h -include ./include/linux/compiler_types.h -D__KERNEL__ -fmacro-prefix-map=./= -Wall -Wundef -Werror=strict-prototypes -Wno-trigraphs -fno-strict-aliasing -fno-common -fshort-wchar -fno-PIE -Werror=implicit-function-declaration -Werror=implicit-int -Werror=return-type -Wno-format-security -std=gnu11 -mno-sse -mno-mmx -mno-sse2 -mno-3dnow -mno-avx -fcf-protection=none -m64 -falign-jumps=1 -falign-loops=1 -mno-80387 -mno-fp-ret-in-387 -mpreferred-stack-boundary=3 -mskip-rax-setup -mtune=generic -mno-red-zone -mcmodel=kernel -Wno-sign-compare -fno-asynchronous-unwind-tables -mindirect-branch=thunk-extern -mindirect-branch-register -fno-jump-tables -fno-delete-null-pointer-checks -Wno-frame-address -Wno-format-truncation -Wno-format-overflow -Wno-address-of-packed-member -O2 -fno-allow-store-data-races -Wframe-larger-than=2048 -fstack-protector-strong -Wimplicit-fallthrough=5 -Wno-unused-but-set-variable -Wno-unused-const-variable -fno-stack-clash-protection -g -pg -mrecord-mcount -mfentry -DCC_USING_FENTRY -fno-inline-functions-called-once -Wdeclaration-after-statement -Wvla -Wno-pointer-sign -Wno-stringop-truncation -Wno-zero-length-bounds -Wno-array-bounds -Wno-stringop-overflow -Wno-restrict -Wno-maybe-uninitialized -Wno-alloc-size-larger-than -fno-strict-overflow -fno-stack-check -fconserve-stack -Werror=date-time -Werror=incompatible-pointer-types -Werror=designated-init -Wno-packed-not-aligned -Wno-declaration-after-statement -fno-pie -include /tmp/vbox.0/include/VBox/VBoxGuestMangling.h -I./include -I/tmp/vbox.0/ -I/tmp/vbox.0/include -I/tmp/vbox.0/r0drv/linux -D__KERNEL__ -DMODULE -DRT_WITHOUT_PRAGMA_ONCE -DVBOX -DRT_OS_LINUX -DIN_RING0 -DIN_RT_R0 -DIN_GUEST -DIN_GUEST_R0 -DIN_MODULE -DRT_WITH_VBOX -DVBGL_VBOXGUEST -DVBOX_WITH_HGCM -DVBOX_WITH_64_BITS_GUESTS -DRT_ARCH_AMD64  -DMODULE  -DKBUILD_BASENAME='"VBoxGuest"' -DKBUILD_MODNAME='"vboxguest"' -D__KBUILD_MODNAME=kmod_vboxguest -c -o /tmp/vbox.0/VBoxGuest.o /tmp/vbox.0/VBoxGuest.c
+In file included from /tmp/vbox.0/include/iprt/types.h:34,
+                 from /tmp/vbox.0/r0drv/linux/the-linux-kernel.h:37,
+                 from /tmp/vbox.0/VBoxGuest-linux.c:36:
+/tmp/vbox.0/include/iprt/stdarg.h:51:13: fatal error: stdarg.h: No such file or directory
+   51 | #   include <stdarg.h>
+      |             ^~~~~~~~~~
+compilation terminated.
+make[2]: *** [scripts/Makefile.build:271: /tmp/vbox.0/VBoxGuest-linux.o] Error 1
+make[2]: *** Waiting for unfinished jobs....
+In file included from /tmp/vbox.0/include/iprt/types.h:34,
+                 from /tmp/vbox.0/VBoxGuestInternal.h:33,
+                 from /tmp/vbox.0/VBoxGuest.c:54:
+/tmp/vbox.0/include/iprt/stdarg.h:51:13: fatal error: stdarg.h: No such file or directory
+   51 | #   include <stdarg.h>
+      |             ^~~~~~~~~~
+compilation terminated.
+make[2]: *** [scripts/Makefile.build:271: /tmp/vbox.0/VBoxGuest.o] Error 1
+make[1]: *** [Makefile:1881: /tmp/vbox.0] Error 2
+make: *** [/tmp/vbox.0/Makefile-footer.gmk:117: vboxguest] Error 2
+modprobe vboxguest failed

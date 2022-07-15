@@ -1,0 +1,21 @@
+VirtualBox Guest Additions installer
+Removing installed version 6.1.34 of VirtualBox Guest Additions...
+Copying additional installer modules ...
+Installing additional modules ...
+Verifying archive integrity... All good.
+Uncompressing VirtualBox 6.1.34 Guest Additions for Linux........
+VirtualBox Guest Additions: Starting.
+VirtualBox Guest Additions: Building the VirtualBox Guest Additions kernel 
+modules.  This may take a while.
+VirtualBox Guest Additions: To build modules for other installed kernels, run
+VirtualBox Guest Additions:   /sbin/rcvboxadd quicksetup <version>
+VirtualBox Guest Additions: or
+VirtualBox Guest Additions:   /sbin/rcvboxadd quicksetup all
+VirtualBox Guest Additions: Building the modules for kernel 
+5.14.0-124.el9.x86_64.
+
+VirtualBox Guest Additions: Look at /var/log/vboxadd-setup.log to find out what 
+went wrong
+ValueError: File context for /opt/VBoxGuestAdditions-6.1.34/other/mount.vboxsf already defined
+modprobe vboxguest failed
+The log file /var/log/vboxadd-setup.log may contain further information.
